@@ -55,10 +55,10 @@ export const feedback = [
   {
     id: "feedback-1",
     content:
-      "Money is only a tool. It will take you wherever you wish, but it will not replace you as the driver.",
-    name: "Ali Wains",
-    title: "Founder & Leader",
-    img: aliwains,
+      "I am amazed by your service, and the payment was right on time",
+    name: "Rasib Ansari",
+    title: "Customer",
+    img: people01,
   },
   {
     id: "feedback-2",

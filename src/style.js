@@ -16,6 +16,7 @@ const styles = {
 
     link: "font-poppins-font-normal text-[16px] leading-[24px] text-white hover:text-secondary cursor-pointer transition ease-in-out duration-300",
     inputField: "mb-2 bg-primary w-full border border-solid border-sky-500 p-2",
+    highlightText: "text-[1.5rem] text-secondary font-bold",
 };
 
 export const layout = {
