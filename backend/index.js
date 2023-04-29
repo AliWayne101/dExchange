@@ -13,6 +13,8 @@ const mongoose = require('mongoose');
 
 let connected = false;
 
+//remove comment from '/stats'
+
 async function main() {
   console.log("connecting database");
   await connect(db_token)
