@@ -142,6 +142,19 @@ export const footerLinks = [
   },
 ];
 
+export const socialMedia = [
+  {
+    id: "social-media-1",
+    icon: instagram,
+    link: "https://www.instagram.com/ali.wayne101",
+  },
+  {
+    id: "social-media-2",
+    icon: facebook,
+    link: "https://www.facebook.com/AlexAmeenWains",
+  },
+];
+
 export const clients = [
   {
     id: "client-1",
