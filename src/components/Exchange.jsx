@@ -5,7 +5,6 @@ import { CURRENCY } from "../tool/USDPKR";
 import axios from "axios";
 import Button from "./Button";
 import { confused, success } from "../assets";
-import { backendAddr } from "../constants";
 import LoadingScreen from "./LoadingScreen";
 
 let over_amount = 0;
@@ -19,6 +18,9 @@ const Exchange = ({ refLink }) => {
   const [orderId, setorderId] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+
+  
+  const backendAddr = import.meta.env.VITE_WEB_ADDR;
 
   const [initialValue, setinitialValue] = useState(0);
   const [userDetails, setUserDetails] = useState({

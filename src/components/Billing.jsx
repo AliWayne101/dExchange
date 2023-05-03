@@ -4,7 +4,6 @@ import styles, { layout } from "../style";
 import Button from "./Button";
 import axios from "axios";
 import LoadingScreen from "./LoadingScreen";
-import { backendAddr } from "../constants";
 
 const Billing = () => {
   const [targetEmail, setTargetEmail] = useState("");
@@ -12,6 +11,8 @@ const Billing = () => {
   const [showTableData, setShowTableData] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [showAll, setShowAll] = useState(false);
+
+  const backendAddr = import.meta.env.VITE_WEB_ADDR;
 
   const queryEmail = (e) => {
     setTargetEmail(e.target.value);

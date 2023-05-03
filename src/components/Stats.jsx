@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { backendAddr } from "../constants";
 import styles from "../style";
 import axios from "axios";
 
@@ -9,6 +8,9 @@ const Stats = () => {
     transactions: null,
     totalTransactions: null,
   });
+
+  
+  const backendAddr = import.meta.env.VITE_WEB_ADDR;
 
   useEffect(() => {axios
     .get(`${backendAddr}/stats`)

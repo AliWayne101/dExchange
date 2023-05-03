@@ -173,5 +173,3 @@ export const clients = [
     logo: dropbox,
   },
 ];
-
-export const backendAddr = process.env.WEB_ADDR
