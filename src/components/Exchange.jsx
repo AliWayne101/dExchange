@@ -67,7 +67,7 @@ const Exchange = ({ refLink }) => {
       USD: grossDollars,
     };
     return rVal;
-  };
+  }
 
   const createOrder = (data, actions) => {
     return actions.order
