@@ -195,7 +195,6 @@ const Exchange = ({ refLink }) => {
     axios
       .get(`${backendAddr}/exchangerate`)
       .then((response) => {
-        console.log(response.data);
         USDPKR = response.data;
       })
       .catch((err) => {
