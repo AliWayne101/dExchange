@@ -4,11 +4,10 @@ import styles, { layout } from "../style";
 import Button from "./Button";
 import axios from "axios";
 import LoadingScreen from "./LoadingScreen";
+import { backendAddr } from "../constants";
 
 const Billing = () => {
-  const [showTrack, setShowTrack] = useState(false);
   const [targetEmail, setTargetEmail] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
   const [showTableData, setShowTableData] = useState(false);
   const [tableData, setTableData] = useState([]);
@@ -21,13 +20,11 @@ const Billing = () => {
   const Track = () => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:3000/search?email=${targetEmail}`)
+      .get(`${backendAddr}/search?email=${targetEmail}`)
       .then((response) => {
         setIsLoading(false);
-        if (response.data.status === 200) {
-          setTableData(response.data.data);
-          setShowTableData(true);
-        }
+        setTableData(response.data.data);
+        setShowTableData(true);
       })
       .catch((err) => {
         console.log("Unable");
