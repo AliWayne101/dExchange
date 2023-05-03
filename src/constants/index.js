@@ -204,4 +204,4 @@ export const clients = [
   },
 ];
 
-export const backendAddr = 'http://localhost:3000';
+export const backendAddr = 'https://mainframe-backend.vercel.app';

@@ -11,17 +11,6 @@ import LoadingScreen from "./LoadingScreen";
 let over_amount = 0;
 let USDPKR = 0;
 
-console.log(`${backendAddr}/exchangerate`);
-axios
-  .get(`${backendAddr}/exchangerate`)
-  .then((response) => {
-    console.log(response.data);
-    USDPKR = response.data;
-  })
-  .catch((err) => {
-    console.log("Unable");
-  });
-
 const Exchange = ({ refLink }) => {
   const [Show, setShow] = useState(false);
 
@@ -35,7 +24,7 @@ const Exchange = ({ refLink }) => {
   const [userDetails, setUserDetails] = useState({
     email: "",
     number: "",
-    paymentMethod: "JazzCash",  
+    paymentMethod: "JazzCash",
     USD: "",
     PKR: "0",
     Referral: refLink,
@@ -79,8 +68,6 @@ const Exchange = ({ refLink }) => {
   };
 
   const createOrder = (data, actions) => {
-    console.log('amount');
-    console.log(over_amount);
     return actions.order
       .create({
         purchase_units: [
@@ -126,15 +113,18 @@ const Exchange = ({ refLink }) => {
         .get(`${backendAddr}/register${data}`)
         .then((response) => {
           setIsLoading(false);
-          
+
           console.info(response);
-          if (response.data === "OK")
-            setIfSuccess(true);
+          if (response.data === "OK") setIfSuccess(true);
           else
-            setErrorMessage('An error was occured while updating the local database, kindly and responsibly contact the owner');
+            setErrorMessage(
+              "An error was occured while updating the local database, kindly and responsibly contact the owner"
+            );
         })
         .catch((err) => {
-          setErrorMessage('An error was occured while updating the local database, kindly and responsibly contact the owner');
+          setErrorMessage(
+            "An error was occured while updating the local database, kindly and responsibly contact the owner"
+          );
         });
     });
   };
@@ -192,12 +182,24 @@ const Exchange = ({ refLink }) => {
       setErrorMessage("Minimum amount to exchange is 10 USD");
     }
     setIsLoading(false);
-  }
+  };
 
   const resetError = () => {
     setErrorMessage("");
     setIfSuccess(false);
   };
+
+  useEffect(() => {
+    axios
+      .get(`${backendAddr}/exchangerate`)
+      .then((response) => {
+        console.log(response.data);
+        USDPKR = response.data;
+      })
+      .catch((err) => {
+        console.log("Unable");
+      });
+  }, []);
 
   return (
     <section
@@ -227,15 +229,18 @@ const Exchange = ({ refLink }) => {
           ) : (
             ""
           )}
-          
+
           <p className={`${styles.paragraph} mt-2`}>
-            Net Amount (after tax): <span className={styles.highlightText}>{
-              refLink !== 'UNDEFINED' ? (
-                (parseFloat(userDetails.PKR) + CURRENCY.REFBONUS).toLocaleString()
-              ) : (
-                parseFloat(userDetails.PKR).toLocaleString()
-              )
-            } PKR</span>.
+            Net Amount (after tax):{" "}
+            <span className={styles.highlightText}>
+              {refLink !== "UNDEFINED"
+                ? (
+                    parseFloat(userDetails.PKR) + CURRENCY.REFBONUS
+                  ).toLocaleString()
+                : parseFloat(userDetails.PKR).toLocaleString()}{" "}
+              PKR
+            </span>
+            .
           </p>
         </span>
         <div className="w-full md:mt-0 mt-6">
