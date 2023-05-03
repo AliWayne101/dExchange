@@ -106,23 +106,15 @@ export const footerLinks = [
     links: [
       {
         name: "Contact",
-        link: "/contact/",
+        link: "/#contact",
       },
       {
-        name: "How it Works",
-        link: "/how-it-works/",
+        name: "Privacy Policy",
+        link: "/Privacy",
       },
       {
-        name: "Create",
-        link: "/create/",
-      },
-      {
-        name: "Explore",
-        link: "/explore/",
-      },
-      {
-        name: "Terms & Services",
-        link: "/terms-and-services/",
+        name: "Terms and Conditions",
+        link: "/Terms",
       },
     ],
   },
@@ -130,24 +122,8 @@ export const footerLinks = [
     title: "Community",
     links: [
       {
-        name: "Help Center",
-        link: "/help-center/",
-      },
-      {
-        name: "Partners",
-        link: "/partners/",
-      },
-      {
-        name: "Suggestions",
-        link: "/suggestions/",
-      },
-      {
         name: "Blog",
-        link: "/blog/",
-      },
-      {
-        name: "Newsletters",
-        link: "/newsletters/",
+        link: "https://wayneblogs.vercel.app/",
       },
     ],
   },
@@ -163,29 +139,6 @@ export const footerLinks = [
         link: "/become-a-partner/",
       },
     ],
-  },
-];
-
-export const socialMedia = [
-  {
-    id: "social-media-1",
-    icon: instagram,
-    link: "https://www.instagram.com/",
-  },
-  {
-    id: "social-media-2",
-    icon: facebook,
-    link: "https://www.facebook.com/",
-  },
-  {
-    id: "social-media-3",
-    icon: twitter,
-    link: "https://www.twitter.com/",
-  },
-  {
-    id: "social-media-4",
-    icon: linkedin,
-    link: "https://www.linkedin.com/",
   },
 ];
 
@@ -208,4 +161,4 @@ export const clients = [
   },
 ];
 
-export const backendAddr = 'https://mainframe-backend.vercel.app';
+export const backendAddr = process.env.WEB_ADDR
