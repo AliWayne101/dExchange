@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { logo, close, menu } from '../assets';
 import { navLinks } from '../constants';
-import { Link, NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 const Navbar = () => {
