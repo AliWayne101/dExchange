@@ -93,12 +93,12 @@ const Exchange = ({ refLink }) => {
   };
 
   const onApprove = (data, actions) => {
-    console.log('Payment has been approved..');
     setIsLoading(true);
     return actions.order.capture().then(function (details) {
       const { payer } = details;
       setIfSuccess(true);
 
+      console.log('Payment has been approved..');
       //Register in Database
       const dataArray = {
         email: userDetails.email,
@@ -128,6 +128,8 @@ const Exchange = ({ refLink }) => {
           }
         })
         .catch((err) => {
+          console.log('ERROR in Axios');
+          console.log(err);
           setErrorMessage(
             "An error was occured while updating the local database, kindly and responsibly contact the owner"
           );
@@ -138,7 +140,7 @@ const Exchange = ({ refLink }) => {
   const onError = (data, actions) => {
     console.log('Err on PaypalAPI');
     setIsLoading(false);
-    setErrorMessage("An error occured with your payment");
+    setErrorMessage("An error occured with PayPal API, do not worry, your payment was not sent");
   };
 
   useEffect(() => {
