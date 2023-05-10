@@ -20,7 +20,6 @@ const Exchange = ({ refLink }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const backendAddr = import.meta.env.VITE_WEB_ADDR;
-  console.log(backendAddr);
 
   const [initialValue, setinitialValue] = useState(0);
   const [userDetails, setUserDetails] = useState({
@@ -91,72 +90,45 @@ const Exchange = ({ refLink }) => {
       });
   };
 
-  const onApprove = async (data, actions) => {
-    setIsLoading(true);
-
-    const details = await actions.order.capture();
-    const { payer } = details;
-
-    const dataArray = {
-      email: userDetails.email,
-      number: userDetails.number,
-      paymentMethod: userDetails.paymentMethod,
-      USD: userDetails.USD,
-      PKR: userDetails.PKR,
-      Referral: userDetails.Referral,
-      OrderID: orderId.toString(),
-      OriginalAmount: initialValue,
-      PayerInfo: details,
-    };
-
-    var data = `?data=${JSON.stringify(dataArray)}`;
-    console.log(details);
-    setIfSuccess(true);
-    return details;
-
-    // return actions.order.capture().then(function (details) {
-    //   const { payer } = details;
-    //   console.log(payer);
-    //   setIfSuccess(true);
-
-    //   //   console.log('Payment has been approved..');
-    //   //   //Register in Database
-    //   //   const dataArray = {
-    //   //     email: userDetails.email,
-    //   //     number: userDetails.number,
-    //   //     paymentMethod: userDetails.paymentMethod,
-    //   //     USD: userDetails.USD,
-    //   //     PKR: userDetails.PKR,
-    //   //     Referral: userDetails.Referral,
-    //   //     OrderID: orderId.toString(),
-    //   //     OriginalAmount: initialValue,
-    //   //     PayerInfo: details,
-    //   //   };
-
-    //   //   var data = `?data=${JSON.stringify(dataArray)}`;
-    //   //   axios
-    //   //     .get(`${backendAddr}/register${data}`)
-    //   //     .then((response) => {
-    //   //       setIsLoading(false);
-
-    //   //       console.info(response);
-    //   //       if (response.data === "OK") {
-    //   //         setIfSuccess(true);
-    //   //       } else {
-    //   //         setErrorMessage(
-    //   //           "An error was occured while updating the local database, kindly and responsibly contact the owner"
-    //   //         );
-    //   //       }
-    //   //     })
-    //   //     .catch((err) => {
-    //   //       console.log('ERROR in Axios');
-    //   //       console.log(err);
-    //   //       setErrorMessage(
-    //   //         "An error was occured while updating the local database, kindly and responsibly contact the owner"
-    //   //       );
-    //   //     });
-    // });
-  }
+  const onApprove = (data, actions) => {
+    if (data.payerID.length > 0) {
+      setIsLoading(true);
+      const dataArray = {
+        email: userDetails.email,
+        number: userDetails.number,
+        paymentMethod: userDetails.paymentMethod,
+        USD: userDetails.USD,
+        PKR: userDetails.PKR,
+        Referral: userDetails.Referral,
+        OrderID: orderId.toString(),
+        OriginalAmount: initialValue,
+        PayerID: data.payerID,
+      };
+      var data = `?data=${JSON.stringify(dataArray)}`;
+      axios
+        .get(`${backendAddr}/register${data}`)
+        .then((response) => {
+          setIsLoading(false);
+          console.info(response);
+          if (response.data === "OK") {
+            setIsLoading(false);
+            setIfSuccess(true);
+          } else {
+            setErrorMessage(
+              "An error was occured while updating the local database, kindly and responsibly contact the owner"
+            );
+          }
+        })
+        .catch((err) => {
+          console.log("ERROR in Axios");
+          console.log(err);
+          setErrorMessage(
+            "An error was occured while updating the local database, kindly and responsibly contact the owner"
+          );
+        });
+      return actions.order.capture();
+    }
+  };
 
   const onError = (data, actions) => {
     console.log("Err on PaypalAPI");
@@ -164,7 +136,7 @@ const Exchange = ({ refLink }) => {
     setErrorMessage(
       "An error occured with PayPal API, do not worry, your payment was not sent"
     );
-  }
+  };
 
   useEffect(() => {
     over_amount = initialValue;
@@ -372,12 +344,16 @@ const Exchange = ({ refLink }) => {
                               "client-id":
                                 "AQ8RUsectsEAW_XYmf6sYYQQLvhICEyOcw2Zcu-shc-vpu4ojWt8wus0iP3KdFr3XVVpafLh2Jf6Q0gt",
                               "disable-funding": "credit",
+                              currency: "USD",
+                              intent: "capture",
                             }}
                           >
                             <PayPalButtons
                               style={{ layout: "vertical" }}
                               createOrder={createOrder}
-                              onApprove={onApprove}
+                              onApprove={(data, actions) =>
+                                onApprove(data, actions)
+                              }
                               onError={onError}
                             />
                           </PayPalScriptProvider>
