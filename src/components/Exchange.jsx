@@ -21,6 +21,7 @@ const Exchange = ({ refLink }) => {
 
   
   const backendAddr = import.meta.env.VITE_WEB_ADDR;
+  console.log(backendAddr);
 
   const [initialValue, setinitialValue] = useState(0);
   const [userDetails, setUserDetails] = useState({
@@ -117,11 +118,13 @@ const Exchange = ({ refLink }) => {
           setIsLoading(false);
 
           console.info(response);
-          if (response.data === "OK") setIfSuccess(true);
-          else
+          if (response.data === "OK") {
+            setIfSuccess(true);
+          } else {
             setErrorMessage(
               "An error was occured while updating the local database, kindly and responsibly contact the owner"
             );
+          }
         })
         .catch((err) => {
           setErrorMessage(
