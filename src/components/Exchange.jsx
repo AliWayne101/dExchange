@@ -19,7 +19,6 @@ const Exchange = ({ refLink }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  
   const backendAddr = import.meta.env.VITE_WEB_ADDR;
   console.log(backendAddr);
 
@@ -68,7 +67,7 @@ const Exchange = ({ refLink }) => {
       USD: grossDollars,
     };
     return rVal;
-  }
+  };
 
   const createOrder = (data, actions) => {
     return actions.order
@@ -96,51 +95,54 @@ const Exchange = ({ refLink }) => {
     setIsLoading(true);
     return actions.order.capture().then(function (details) {
       const { payer } = details;
+      console.log(payer);
       setIfSuccess(true);
 
-      console.log('Payment has been approved..');
-      //Register in Database
-      const dataArray = {
-        email: userDetails.email,
-        number: userDetails.number,
-        paymentMethod: userDetails.paymentMethod,
-        USD: userDetails.USD,
-        PKR: userDetails.PKR,
-        Referral: userDetails.Referral,
-        OrderID: orderId.toString(),
-        OriginalAmount: initialValue,
-        PayerInfo: details,
-      };
+      //   console.log('Payment has been approved..');
+      //   //Register in Database
+      //   const dataArray = {
+      //     email: userDetails.email,
+      //     number: userDetails.number,
+      //     paymentMethod: userDetails.paymentMethod,
+      //     USD: userDetails.USD,
+      //     PKR: userDetails.PKR,
+      //     Referral: userDetails.Referral,
+      //     OrderID: orderId.toString(),
+      //     OriginalAmount: initialValue,
+      //     PayerInfo: details,
+      //   };
 
-      var data = `?data=${JSON.stringify(dataArray)}`;
-      axios
-        .get(`${backendAddr}/register${data}`)
-        .then((response) => {
-          setIsLoading(false);
+      //   var data = `?data=${JSON.stringify(dataArray)}`;
+      //   axios
+      //     .get(`${backendAddr}/register${data}`)
+      //     .then((response) => {
+      //       setIsLoading(false);
 
-          console.info(response);
-          if (response.data === "OK") {
-            setIfSuccess(true);
-          } else {
-            setErrorMessage(
-              "An error was occured while updating the local database, kindly and responsibly contact the owner"
-            );
-          }
-        })
-        .catch((err) => {
-          console.log('ERROR in Axios');
-          console.log(err);
-          setErrorMessage(
-            "An error was occured while updating the local database, kindly and responsibly contact the owner"
-          );
-        });
+      //       console.info(response);
+      //       if (response.data === "OK") {
+      //         setIfSuccess(true);
+      //       } else {
+      //         setErrorMessage(
+      //           "An error was occured while updating the local database, kindly and responsibly contact the owner"
+      //         );
+      //       }
+      //     })
+      //     .catch((err) => {
+      //       console.log('ERROR in Axios');
+      //       console.log(err);
+      //       setErrorMessage(
+      //         "An error was occured while updating the local database, kindly and responsibly contact the owner"
+      //       );
+      //     });
     });
   };
 
   const onError = (data, actions) => {
-    console.log('Err on PaypalAPI');
+    console.log("Err on PaypalAPI");
     setIsLoading(false);
-    setErrorMessage("An error occured with PayPal API, do not worry, your payment was not sent");
+    setErrorMessage(
+      "An error occured with PayPal API, do not worry, your payment was not sent"
+    );
   };
 
   useEffect(() => {
