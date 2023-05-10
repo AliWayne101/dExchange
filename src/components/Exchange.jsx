@@ -93,6 +93,7 @@ const Exchange = ({ refLink }) => {
   };
 
   const onApprove = (data, actions) => {
+    console.log('Payment has been approved..');
     setIsLoading(true);
     return actions.order.capture().then(function (details) {
       const { payer } = details;
@@ -135,6 +136,8 @@ const Exchange = ({ refLink }) => {
   };
 
   const onError = (data, actions) => {
+    console.log('Err on PaypalAPI');
+    setIsLoading(false);
     setErrorMessage("An error occured with your payment");
   };
 
